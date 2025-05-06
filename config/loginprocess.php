@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 include 'koneksi.php';
 
@@ -7,6 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    $email = mysqli_real_escape_string($conn, $email);
+    
     $query = "SELECT * FROM users WHERE email='$email'";
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_assoc($result);
@@ -25,3 +27,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+<?php ob_end_flush(); ?>
